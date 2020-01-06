@@ -44,8 +44,8 @@ inline double interpolate(
     return (((y0 * (x1 - x)) + (y1 * (x - x0)))/diffX);
 }
 
-inline double deg2rad (double deg) {return (deg*PI/180);}
-inline double rad2deg (double rad) {return (rad*180/PI);}
+inline double deg2rad_f (double deg) {return (deg*PI/180);}
+inline double rad2deg_f (double rad) {return (rad*180/PI);}
 
 class SimSail : public AppCastingMOOSApp {
     public:

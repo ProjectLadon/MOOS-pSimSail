@@ -281,14 +281,14 @@ float SimSail::getNewSpeed() {
 
 float SimSail::getNewHeading() {
     turnRate += getAngularAccel();
-    heading += rad2deg(turnRate) * (1.0/GetAppFreq());
+    heading += rad2deg_f(turnRate) * (1.0/GetAppFreq());
     heading = normalizeHeading(heading);
     return heading;
 }
 
 void SimSail::integrate() {
-    navX += speed * (1.0/GetAppFreq()) * sin(deg2rad(heading));
-    navY += speed * (1.0/GetAppFreq()) * cos(deg2rad(heading));
+    navX += speed * (1.0/GetAppFreq()) * sin(deg2rad_f(heading));
+    navY += speed * (1.0/GetAppFreq()) * cos(deg2rad_f(heading));
 }
 
 void SimSail::publish() {
