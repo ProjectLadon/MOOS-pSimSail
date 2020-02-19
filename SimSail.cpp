@@ -133,6 +133,10 @@ bool SimSail::OnStartUp() {
             handled = loadBoundedValue(value, 0, 1000, mass);
         } else if (param == "TURNING_INERTIA") {
             handled = loadBoundedValue(value, 0, 1000, turningInertia);
+        } else if (param == "UNDERWATER_AREA") {
+            handled = loadBoundedValue(value, 0, 1000, waterplaneArea);
+        } else if (param == "UNDERWATER_CP_LEVER_ARM") {
+            handled = loadBoundedValue(value, -1000, 1000, waterplaneCpDistance);
         } else if (param == "WIND_DIRECTION") {
             handled = loadBoundedValue(value, 0, 360, windDirection);
         } else if (param == "WIND_SPEED") {

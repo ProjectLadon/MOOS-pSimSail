@@ -102,6 +102,8 @@ class SimSail : public AppCastingMOOSApp {
         float mizzenArea;
         float foresailCgDistance;
         float mizzenCgDistance;
+        float waterplaneArea;
+        float waterplaneCpDistance;
 
     private:    // Input message names
         string foresailTailCmd;

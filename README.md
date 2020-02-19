@@ -8,78 +8,42 @@ This is a simulator for wing schooners. It takes the sail set positions and outp
 * https://github.com/Tencent/rapidjson/ -- provides JSON parse/deparse
 
 ## Configuration Parameters
-* wingsail -- JSON object configuring one sail. A typical wing schooner will have two. Each sail object must conform to the following schema:
-```
-{
-	"$schema": "http://json-schema.org/schema#",
-	"id": "SimSail_WingSail",
-	"type": "object",
-	"properties": {
-        "tail_variable": {"type": "string"}
-        "area": {"type": "number"},
-        "lever_arm": {
-            "type": "object",
-            "properties": {
-                "x": {"type": "number"},
-                "y": {"type": "number"},
-                "z": {"type": "number"}
-            },
-            "required": ["x", "y"]
-        },
-        "Cl": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "AOA": {"type": "number"},
-                    "Cl": {"type": "number"}
-                },
-                "required": ["AOA", "Cl"]
-            }
-        },
-        "Cd": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "AOA": {"type": "number"},
-                    "Cd": {"type": "number"}
-                },
-                "required": ["AOA", "Cd"]
-            }
-        },
-        "tail_map": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "tail": {"type": "number"},
-                    "AOA": {"type": "number"}
-                },
-                "required": ["tail", "AOA"]
-            }
-        }
-    }
-    "required": ["area", "Cl", "Cd", "tail_map"]
-}
-```
-All quantities in MKS units and angles in degrees. Lever arms are in meters forward and port of the center of gravity.
-
-* mass -- The total mass of the vehicle, in kilograms.
-* moi -- The vehicle moment of inertia around the center of gravity, in kg-m^2.
-* damping -- The rotational damping coefficient, in N-m-s
-* wind_direction -- The direction the wind is coming from, in degrees clockwise from north
-* wind_speed -- The velocity of the wind, in m/s
-* start_latitude -- Latitude of the zero point of the local coordinate system, in decimal degrees.
-* start_longitude -- Longitude of the zero point of the local coordinate system, in decimal degrees.
-
-## Incoming Variables
-This modules shall subscribe to the variables defined in the wingsail configuration objects.
-
-## Outgoing variables
-* SIM_Latitude -- A DOUBLE containing the current latitude
-* SIM_Longitude
-* SIM_X
-* SIM_Y
-* SIM_Heading
-* SIM_Speed
+### Foresail
+	* foresail_cl -- A table of the coefficient of lift of the foresail. It is a JSON array of pairs. The first element of each pair is the AoA in degrees and the second is the coefficient of lift at that AoA.
+	* foresail_cd -- A table like foresail_cl for the foresail coefficient of drag.
+	* foresail_tail -- A table like foresail_cl, except the first entry in each pair is the tail setting and the second is the angle of attack. All units are in degrees.
+	* foresail_area -- Area of the foresail in square meters.
+	* foresail_cg_distance -- Distance of the foresail pivot from the center of gravity, in meters.
+### Mizzen
+	* mizzen_cl -- Like foresail_cl, for the mizzen.
+	* mizzen_cd -- Like foresail_cd, for the mizzen.
+	* mizzen_tail -- Like foresail_tail, for the mizzen.
+	* mizzen_area -- Area of the mizzen in square meters.
+	* mizzen_cg_distance -- Distance of the mizzen pivot from the center of gravity, in meters.
+### Hull
+	* water_drag -- Underwater coefficient of drag times forward projected area, in meters squared.
+	* turning_inertia -- Moment of inertia around the center of gravity.
+	* water_turning_drag -- The rotational damping coefficient, in newton-meter-seconds.
+	* mass -- Mass of the vessel, in kilograms.
+	* underwater_area -- The projected underwater area as seen from the side. This produces the restoring force.
+	* underwater_cp_lever_arm -- The position of the geometric center of the underwater area in the same units as wingsail lever arms.
+### Environment
+	* air_density -- In kilograms per cubic meter.
+	* water_density -- In kilograms per cubic meter.
+	* wind_direction -- The direction the wind is coming from, in degrees clockwise from north
+	* wind_speed -- The velocity of the wind, in m/s
+	* origin_lat -- Latitude of the zero point of the local coordinate system, in decimal degrees.
+	* origin_lon -- Longitude of the zero point of the local coordinate system, in decimal degrees.
+	* start_x -- Starting position, in meters north of the origin.
+	* start_y -- Starting position, in meters east of the origin.
+### Incoming Variables
+	* foresail_tail_cmd -- Foresail tail command in degrees
+	* mizzen_tail_cmd -- Mizzen tail command in degrees
+### Outgoing Variables
+	* output_lat_msg
+	* output_lon_msg
+	* foresail_hdg_msg
+	* mizzen_hdg_msg
+	* boat_hdg_msg
+	* speed_over_gnd_msg
+	* course_over_gnd_msg
