@@ -5,8 +5,6 @@
 /*    DATE: December 29th, 1963                             */
 /************************************************************/
 
-#pragma once
-
 #include <string>
 #include <cmath>
 #include "utility.h"
@@ -14,7 +12,7 @@
 
 using namespace std;
 
-Foil::calculate(const float theta, const float speed, const float density)
+void Foil::calculate(const float theta, const float speed, const float density)
 {
     float cl = 2 * M_PI * theta;
     float cd = cl * sin(theta);

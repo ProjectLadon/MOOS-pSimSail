@@ -11,6 +11,7 @@
 #include "MOOS/libMOOSGeodesy/MOOSGeodesy.h"
 #include <string>
 #include <map>
+#include "physics.h"
 
 using namespace std;
 
@@ -31,41 +32,18 @@ class SimSail : public AppCastingMOOSApp {
     protected:
         void registerVariables();
 
-    private:    // Physics funtions
-        float getDriveForce();
-        float getTurnTorque();
-        float getDragForce();
-        float getTurningResistance();
-        float getAccel();
-        float getAngularAccel();
-        float getNewSpeed();
-        float getNewHeading();
+    protected:
+        // operation functions
         void integrate();
         void publish();
 
-    private:    // Configuration variables
-        map<float, float> foresailCl;
-        map<float, float> foresailCd;
-        map<float, float> foresailTailMap;
-        map<float, float> mizzenCl;
-        map<float, float> mizzenCd;
-        map<float, float> mizzenTailMap;
-        float waterDrag;
-        float waterTurnDrag;
-        float mass;
-        float turningInertia;
-        float airDensity;
-        float waterDensity;
+    private:
+        // Configuration variables
+        BoatModel boat;
         float windDirection;
         float windSpeed;
         float originLat;
         float originLon;
-        float foresailArea;
-        float mizzenArea;
-        float foresailCgDistance;
-        float mizzenCgDistance;
-        float waterplaneArea;
-        float waterplaneCpDistance;
 
     private:    // Input message names
         string foresailTailCmd;
@@ -84,11 +62,6 @@ class SimSail : public AppCastingMOOSApp {
         CMOOSGeodesy    m_geo;
         float foresailTail;
         float mizzenTail;
-        float foresailAoA;
-        float mizzenAoA;
-        float speed = 0;
-        float heading = 0;
-        float turnRate = 0;
         float navX = 0;
         float navY = 0;
 };

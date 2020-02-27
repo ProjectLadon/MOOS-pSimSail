@@ -18,9 +18,9 @@ using namespace std;
 class Wing
 {
 public:
-    Wing();
+    Wing() {};
     Wing(const string cl, const string cd, const string tail, const float lever, const float area);
-    ~Wing();
+    ~Wing() {};
 
     // set up functions
     void setCl(const string cl) {cl_table = loadMap(cl);};
@@ -31,9 +31,10 @@ public:
 
     // calculation functions
     void calculate(const float windAngle, const float windSpeed, const float tail, const float density);
-    float getLongitudinalForce() {return long_force;};
-    float getTransverseForce() {return trans_force;};
-    float getTorque() {return torque;};
+    inline float getLongitudinalForce() const {return long_force;};
+    inline float getTransverseForce() const {return trans_force;};
+    inline float getTorque() const {return torque;};
+    float getSailHeading(const float heading, const float windAngle, const float tail) const;
 
 private:
 

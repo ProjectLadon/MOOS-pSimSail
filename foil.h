@@ -17,7 +17,7 @@ class Foil {
 public:
     Foil() {};
     Foil(const float area, const float lever) : foil_area(area), lever_arm(lever) {};
-    ~Foil();
+    ~Foil() {};
 
     // config functions
     void setArea(const float area) {foil_area = area;};
@@ -25,9 +25,9 @@ public:
 
     // calculation functions
     void calculate(const float theta, const float speed, const float density);
-    float getLongitudinalForce() {return long_force;};
-    float getTransverseForce() {return trans_force;};
-    float getTorque() {return torque;};
+    inline float getLongitudinalForce() const {return long_force;};
+    inline float getTransverseForce() const {return trans_force;};
+    inline float getTorque() const {return torque;};
 
 private:
     // config variables

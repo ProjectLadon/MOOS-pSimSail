@@ -7,6 +7,10 @@ SET(SRC
   SimSail.cpp
   SimSail_Info.cpp
   main.cpp
+  physics.cpp
+  wing.cpp
+  foil.cpp
+  utility.cpp
 )
 
 #=============================================================================

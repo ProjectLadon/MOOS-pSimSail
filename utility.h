@@ -12,6 +12,8 @@
 #include <cmath>
 #include <nlohmann/json.hpp>
 
+using namespace std;
+
 map<float, float> loadMap(string input);
 float tableLookup(map<float, float> table, float target);
 bool loadBoundedValue(string input, float min, float max, float &val);
@@ -46,5 +48,5 @@ inline double interpolate(
     return (((y0 * (x1 - x)) + (y1 * (x - x0)))/diffX);
 }
 
-inline double deg2rad_f (double deg) {return (deg*PI/180);}
-inline double rad2deg_f (double rad) {return (rad*180/PI);}
+inline double deg2rad_f (double deg) {return (deg*M_PI/180);}
+inline double rad2deg_f (double rad) {return (rad*180/M_PI);}

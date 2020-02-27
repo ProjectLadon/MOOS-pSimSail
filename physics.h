@@ -27,18 +27,19 @@ public:
     void calculate(const float windAngle, const float windSpeed, const float foretail, const float mizzentail, const float dt);
 
     // read out subsections
-    const Wing& getForeWing() {return forewing;};
-    const Wing& getMizzen() {return mizzen;};
-    const Foil& getKeel() {return keel;};
-    const Foil& getSkeg() {return skeg;};
+    inline const Wing* getForeWing() {return &forewing;};
+    inline const Wing* getMizzen() {return &mizzen;};
+    inline const Foil* getKeel() {return &keel;};
+    inline const Foil* getSkeg() {return &skeg;};
 
     // read out boat variables
-    float getLongVelocity() {return long_velocity;};
-    float getTransVelocity() {return trans_velocity;};
-    float getAngularVelocity() {return omega;};
-    float getLeeway() {return rad2deg_f(theta);};
-    float getHeading() {return rad2deg_f(heading);};
-    float getCourseOverGround() {return rad2rad2deg_f(heading - theta);};
+    inline float getLongVelocity() const {return long_velocity;};
+    inline float getTransVelocity() const {return trans_velocity;};
+    inline float getAngularVelocity() const {return omega;};
+    inline float getLeeway() const {return rad2deg_f(theta);};
+    inline float getHeading() const {return rad2deg_f(heading);};
+    inline float getCourseOverGround() const {return rad2deg_f(heading - theta);};
+    inline float getSpeed() const {return(sqrt((long_velocity * long_velocity) + (trans_velocity * trans_velocity)));}
 
 private:
     // config variables
@@ -46,6 +47,7 @@ private:
     Wing mizzen;
     Foil keel;
     Foil skeg;
+    float water_drag;
     float mass;
     float inertia_moment;
     float water_density;

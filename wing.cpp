@@ -5,8 +5,6 @@
 /*    DATE: December 29th, 1963                             */
 /************************************************************/
 
-#pragma once
-
 #include <map>
 #include <string>
 #include <cmath>
@@ -24,12 +22,19 @@ lever_arm(lever), sail_area(area)
     aoa_table = loadMap(tail);
 }
 
-Wing::calculate(const float windAngle, const float windSpeed, const float tail, const float density)
+float Wing::getSailHeading(const float heading, const float windAngle, const float tail) const
+{
+    float sailhdg = heading + windAngle;
+    sailhdg += tableLookup(aoa_table, tail);
+    return rad2deg_f(sailhdg);
+}
+
+void Wing::calculate(const float windAngle, const float windSpeed, const float tail, const float density)
 {
     float aoa = tableLookup(aoa_table, tail);
     float q = 0.5 * density * windSpeed * windSpeed;
-    float drag = q * area * tableLookup(cd_table, aoa);
-    float lift = q * area * tableLookup(cl_table, aoa);
+    float drag = q * sail_area * tableLookup(cd_table, aoa);
+    float lift = q * sail_area * tableLookup(cl_table, aoa);
     long_force = (lift * sin(windAngle)) - (drag * cos(windAngle));
     trans_force = -(lift * cos(windAngle)) - (drag * sin(windAngle));
     torque = trans_force * lever_arm;

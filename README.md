@@ -13,20 +13,21 @@ This is a simulator for wing schooners. It takes the sail set positions and outp
 	* foresail_cd -- A table like foresail_cl for the foresail coefficient of drag.
 	* foresail_tail -- A table like foresail_cl, except the first entry in each pair is the tail setting and the second is the angle of attack. All units are in degrees.
 	* foresail_area -- Area of the foresail in square meters.
-	* foresail_cg_distance -- Distance of the foresail pivot from the center of gravity, in meters.
+	* foresail_cg_distance -- Distance of the foresail pivot from the center of gravity, in meters forward of the CG.
 ### Mizzen
 	* mizzen_cl -- Like foresail_cl, for the mizzen.
 	* mizzen_cd -- Like foresail_cd, for the mizzen.
 	* mizzen_tail -- Like foresail_tail, for the mizzen.
 	* mizzen_area -- Area of the mizzen in square meters.
-	* mizzen_cg_distance -- Distance of the mizzen pivot from the center of gravity, in meters.
+	* mizzen_cg_distance -- Distance of the mizzen pivot from the center of gravity, in meters aft of the CG.
 ### Hull
 	* water_drag -- Underwater coefficient of drag times forward projected area, in meters squared.
-	* turning_inertia -- Moment of inertia around the center of gravity.
-	* water_turning_drag -- The rotational damping coefficient, in newton-meter-seconds.
+	* inertia_moment -- Moment of inertia around the center of gravity.
 	* mass -- Mass of the vessel, in kilograms.
-	* underwater_area -- The projected underwater area as seen from the side. This produces the restoring force.
-	* underwater_cp_lever_arm -- The position of the geometric center of the underwater area in the same units as wingsail lever arms.
+	* keel_area -- Area of keel, in square meters.
+	* keel_cg_distance -- Keel lever arm, in meters forward of the CG.
+	* skeg_area -- Area of skeg, in square meters.
+	* skeg_cg_distance -- Skeg lever arm, in meters aft of the CG.
 ### Environment
 	* air_density -- In kilograms per cubic meter.
 	* water_density -- In kilograms per cubic meter.
