@@ -21,7 +21,7 @@ bool loadBoundedValue(string input, float min, float max, float &val);
 /// @brief Normalizes input to the range (0.0-360.0) inclusive
 /// @param float in -- The number to normalize
 /// @return The normalized value
-inline double normalizeHeading(double in)
+inline double normalizeHeadingDeg(double in)
 {
     while (in > 360.0) in -= 360.0;
     while (in < 0.0) in += 360.0;

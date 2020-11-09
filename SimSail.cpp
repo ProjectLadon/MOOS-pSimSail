@@ -164,13 +164,13 @@ void SimSail::registerVariables() {
 }
 
 void SimSail::integrate() {
-    float windAngle = deg2rad_f(normalizeHeading(windDirection - boat.getHeading()));
+    float windAngle = deg2rad_f(normalizeHeadingDeg(windDirection - boat.getHeading()));
     float dt = (1.0/GetAppFreq());
     boat.calculate(
         windAngle,
         windSpeed,
-        foresailTail,
-        mizzenTail,
+        deg2rad_f(foresailTail),
+        deg2rad_f(mizzenTail),
         dt
     );
     navX += boat.getSpeed() * dt * sin(deg2rad_f(boat.getCourseOverGround()));
@@ -179,7 +179,7 @@ void SimSail::integrate() {
 
 void SimSail::publish() {
     double lat, lon;
-    float windAngle = deg2rad_f(normalizeHeading(windDirection - boat.getHeading()));
+    float windAngle = deg2rad_f(normalizeHeadingDeg(windDirection - boat.getHeading()));
     m_geo.LocalGrid2LatLong(navX, navY, lat, lon);
     Notify(outputLatMsg, lat);
     Notify(outputLonMsg, lon);
@@ -195,15 +195,19 @@ void SimSail::publish() {
 
 bool SimSail::buildReport()
 {
-  m_msgs << "============================================ \n";
-  m_msgs << "File:                                        \n";
-  m_msgs << "============================================ \n";
-
-  ACTable actab(4);
-  actab << "Alpha | Bravo | Charlie | Delta";
-  actab.addHeaderLines();
-  actab << "one" << "two" << "three" << "four";
-  m_msgs << actab.getFormattedString();
-
+  m_msgs << "============================================" << endl;
+  m_msgs << "File: pSimSail" << endl;
+  m_msgs << "============================================" << endl;
+  m_msgs << "===============Sim Parameters===============" << endl;
+  m_msgs << "Wind Direction:\t\t" << to_string(windDirection) << "\tdeg" << endl;
+  m_msgs << "Wind Speed:\t\t" << to_string(windSpeed) << "\tm/s" << endl;
+  m_msgs << "Origin Latitude:\t" << to_string(originLat) << "\tdeg" << endl;
+  m_msgs << "Origin Longitude:\t" << to_string(originLon) << "\tdeg" << endl;
+  m_msgs << "=================Sim Outputs================" << endl;
+  m_msgs << "Foresail Tail Cmd:\t" << to_string(foresailTail) << "\tdeg" << endl;
+  m_msgs << "Mizzen Tail Cmd:\t" << to_string(mizzenTail) << "\tdeg" << endl;
+  m_msgs << "Navigation X:\t\t" << to_string(navX) << "\tm" << endl;
+  m_msgs << "Navigation Y:\t\t" << to_string(navY) << "\tm" << endl;
+  m_msgs << boat.buildReport();
   return(true);
 }

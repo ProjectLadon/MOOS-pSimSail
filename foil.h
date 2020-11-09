@@ -29,6 +29,9 @@ public:
     inline float getTransverseForce() const {return trans_force;};
     inline float getTorque() const {return torque;};
 
+    // Report out
+    string buildReport();
+
 private:
     // config variables
     float foil_area = 0;

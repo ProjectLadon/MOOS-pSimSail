@@ -36,6 +36,9 @@ public:
     inline float getTorque() const {return torque;};
     float getSailHeading(const float heading, const float windAngle, const float tail) const;
 
+    // Report out
+    string buildReport();
+
 private:
 
     // Config variables

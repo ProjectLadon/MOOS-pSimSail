@@ -10,9 +10,12 @@
 #include <cmath>
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <string>
 #include "wing.h"
 #include "foil.h"
 #include "utility.h"
+
+using namespace std;
 
 class BoatModel
 {
@@ -40,6 +43,9 @@ public:
     inline float getHeading() const {return rad2deg_f(heading);};
     inline float getCourseOverGround() const {return rad2deg_f(heading - theta);};
     inline float getSpeed() const {return(sqrt((long_velocity * long_velocity) + (trans_velocity * trans_velocity)));}
+
+    // Report out
+    string buildReport();
 
 private:
     // config variables

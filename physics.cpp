@@ -8,6 +8,8 @@
 #include <cmath>
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <sstream>
+#include "ACTable.h"
 #include "wing.h"
 #include "foil.h"
 #include "utility.h"
@@ -129,4 +131,38 @@ void BoatModel::calculate(const float windAngle, const float windSpeed, const fl
     omega           += (torque/inertia_moment) * dt;
     heading         += omega * dt;
     theta           = atan2(trans_velocity, long_velocity);
+}
+
+string BoatModel::buildReport()
+{
+    ACTable params(5);
+    ACTable state(5);
+    state << "V(x), m/s | V(y), m/s | omega, rad/s | theta, rad | heading, deg";
+    params << "A*Cd(water) | M, kg | Izz, kg-m^2 | rho(water) kg/m^3 | rho(air) kg/m^3";
+    state.addHeaderLines();
+    params.addHeaderLines();
+    params << to_string(water_drag);
+    params << to_string(mass);
+    params << to_string(inertia_moment);
+    params << to_string(water_density);
+    params << to_string(air_density);
+    state << to_string(long_velocity);
+    state << to_string(trans_velocity);
+    state << to_string(omega);
+    state << to_string(theta);
+    state << to_string(heading);
+
+    stringstream result;
+    result << "=================Boat State=================" << endl;
+    result << params.getFormattedString() << endl << endl;
+    result << state.getFormattedString() << endl;
+    result << "==================Foresail==================" << endl;
+    result << forewing.buildReport() << endl;
+    result << "===================Mizzen===================" << endl;
+    result << mizzen.buildReport() << endl;
+    result << "====================Keel====================" << endl;
+    result << keel.buildReport() << endl;
+    result << "====================Skeg====================" << endl;
+    result << skeg.buildReport() << endl;
+    return result.str();
 }
